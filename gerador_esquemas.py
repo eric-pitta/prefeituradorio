@@ -6,7 +6,7 @@ from datetime import date
 import re
 from googleapiclient.errors import HttpError
 
-creds = Credentials.from_service_account_file(r'C:\Users\ericp\sheet-to-doc\envcga\cga-project-392415-5ffea2fff357.json',
+creds = Credentials.from_service_account_file('cga-project-392415-5ffea2fff357.json',
                                               scopes=['https://www.googleapis.com/auth/spreadsheets',
                                                       'https://www.googleapis.com/auth/drive',
                                                       'https://www.googleapis.com/auth/documents',
