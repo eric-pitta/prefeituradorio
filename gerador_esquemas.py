@@ -6,6 +6,9 @@ from datetime import date
 import re
 from googleapiclient.errors import HttpError
 
+# primeira parte da autenticação da aplicação com a API do Google. 
+# ele lê as informações de credenciais do arquivo de chave de serviço e armazena em um objeto de credenciais 
+# esse objeto de credenciais é então usado para autenticar a aplicação com a API do Google
 creds = Credentials.from_service_account_file('cga-project-392415-5ffea2fff357.json',
                                               scopes=['https://www.googleapis.com/auth/spreadsheets',
                                                       'https://www.googleapis.com/auth/drive',
@@ -13,9 +16,10 @@ creds = Credentials.from_service_account_file('cga-project-392415-5ffea2fff357.j
                                                       'https://www.googleapis.com/auth/gmail.send',
                                                       'https://www.googleapis.com/auth/gmail.modify'])
 
+# etapa de autenticação para usar a API do Google Sheets. Se a autenticação for bem-sucedida, receberá um objeto cliente que pode usar para interagir com a API
 client = gspread.authorize(creds)
 
-
+#Configuração geral do layout da página
 st.set_page_config(
     page_title="Gerador - Portarias e Resoluções",
     page_icon="🖋️",
@@ -24,63 +28,85 @@ st.set_page_config(
     
 )
 
-
+#Definição conteúdo primeira página
 def page_one():
     st.title(" PORTARIAS ✍️" )
     
 
-    # Solicite o link do usuário
+    # Solicita o link do usuário
     st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com :a cga-project-serviceaccount@cga-project-392415.iam.gserviceaccount.com_')
     link = st.text_input('Insira o link da planilha:')
 
     
-    # Solicite o email do usuário
+    # Solicita o email do usuário
     user_email = st.text_input('Seu email: ')
 
     #Solicita o primeiro número de portaria
     primeira_portaria = st.text_input("Número da primeira Portaria do dia: ")
     
-
+    
     data = []
+    #Criação botão que executa o script
     if st.button('Gerar Documento'):
         # Use regex para extrair o ID do link
         ids = re.findall(r'spreadsheets/d/([a-zA-Z0-9-_]+)', link)
 
         
-        # Se um ID foi encontrado, use-o para abrir a planilha
-        
+        # Se um ID é encontrado ele é usado para abrir a planilha        
         if ids:
             id = ids[0]
             spreadsheet = client.open_by_key(id)
             st.write(f"A planilha com ID {id} foi acessada com sucesso!")
-            
+
+            #o 0 se refere a primeira aba
             worksheet = spreadsheet.get_worksheet(0)
-            
+
+            #pega todos os dados da planilha e aba selecionada
             data = worksheet.get_all_values()
         else:
             st.write("Nenhum ID encontrado no link.")
             st.stop()
 
-        # Código a partir daqui pode acessar a variável "spreadsheet"
-
+        # função build da biblioteca google-api-python-client é para criar um objeto de serviço que você pode usar para interagir com a API do Google Docs
+        # 'docs' especifica que desejamos acessar a API do Google Docs, 'v1' é a versão da API, e credentials=creds são as credenciais para autenticar a aplicação.
         docs_service = build('docs', 'v1', credentials=creds)
+
+        # objeto de serviço recém criado para fazer uma chamada à API do Google Docs e criar um novo documento
+        # a função documents() retorna uma referência à coleção de documentos na API do Google Docs 
+        # a função create() inicia uma solicitação para criar um novo documento 
+        # execute() envia a solicitação e retorna a resposta.
         document = docs_service.documents().create().execute()
 
+        # Armazena o ID único do novo documento Google criado para futuras solicitações à API
         document_id = document['documentId']
 
+        # exibe a mensagem no app de que o doc foi criado com sucesso
         st.write(f"Documento criado com sucesso. Link direto: https://docs.google.com/document/d/{document_id}.") 
 
             
-
+        #arranjo das datas com a lib datetime para posterior inclusão nos atos
         data_atual = date.today()
         dia = data_atual.day
-        meses_portugues = {1: 'JANEIRO', 2: 'FEVEREIRO', 3: 'MARÇO', 4: 'ABRIL', 5: 'MAIO', 6: 'JUNHO', 7: 'JULHO', 8: 'AGOSTO', 9: 'SETEMBRO', 10: 'OUTUBRO', 11: 'NOVEMBRO', 12: 'DEZEMBRO'}
+        meses_portugues = {1: 'JANEIRO',
+                           2: 'FEVEREIRO',
+                           3: 'MARÇO',
+                           4: 'ABRIL',
+                           5: 'MAIO',
+                           6: 'JUNHO',
+                           7: 'JULHO',
+                           8: 'AGOSTO',
+                           9: 'SETEMBRO',
+                           10: 'OUTUBRO',
+                           11: 'NOVEMBRO',
+                           12: 'DEZEMBRO'}
         mes = meses_portugues[data_atual.month]
         ano = data_atual.year
 
+        #cria variavel ordem que será incrementada sempre +1, posteriormente, para que os atos sigam uma ordem numérica
         ordem = primeira_portaria
         ordem = int(ordem)
 
+        #aqui começa estruturação da formatação do documento
         titulo = 'SUBSECRETARIA DE GESTÃO\n\n'
         nova_frase = 'A SUBSECRETÁRIA DE GESTÃO, DA SECRETARIA MUNICIPAL DA CASA CIVIL, no uso das atribuições que lhe são conferidas pela legislação em vigor,\n\n'
         resolve = 'RESOLVE\n'
@@ -118,7 +144,7 @@ def page_one():
 
         document_length = len(titulo)
 
-
+        #laço for que vai buscar em cada célula da planilha pelos padrões regex determinados em bold_content, pois tudo o que ele encontrar deve ser colocado em negrito (nome das pessoas)
         for i, row in enumerate(data, start=1):
             portaria_text = f'\nPORTARIA "P" Nº {ordem} DE {dia} DE {mes} DE {ano}\n'
             content = ' '.join(row) + '\n'
@@ -269,7 +295,7 @@ def page_one():
                     },
                     'fields': 'bold'
                 },
-        #-------------------------------
+        
             })
             requests.append({
                 'updateParagraphStyle': {
@@ -283,10 +309,11 @@ def page_one():
                     'fields': 'alignment'
                 }
 
-        #---------------------------------
-
+        
             })
 
+            #percorrendo uma lista de substrings que devem ser formatadas em negrito e adicionando as solicitações de atualização correspondentes a uma lista de solicitações,
+            #essas solicitações podem então ser enviadas à API do Google Docs para atualizar a formatação do texto no documento.
             for item in bold_content:
                 start_index = document_length - len(content) + content.index(item[0])
                 end_index = start_index + len(item[0])
@@ -303,16 +330,21 @@ def page_one():
                     }
                 })
 
+            #envio de solicitações de atualização de estilo de texto para a API do Google Docs em lotes de 100, para otimizar a eficiência da comunicação com a API.
             if i % 100 == 0:
                 docs_service.documents().batchUpdate(documentId=document_id, body={'requests': requests}).execute()
                 requests = []
-
+           
+            #incrimenta +1 na sequência dos atos
             ordem += 1
-
+          
+        # garante que todas as solicitações de atualização de estilo de texto foram enviadas para a API do Google Docs, 
+        # mesmo que o número total de solicitações não seja um múltiplo exato de 100
+        # (ou seja, ainda existem solicitações restantes na lista requests após o envio em lotes de 100).
         if requests:
             docs_service.documents().batchUpdate(documentId=document_id, body={'requests': requests}).execute()
 
-
+            #função responsável por compartilhar o documento com o email (Drive) fornecido pelo usuário
             def share_with_me(document_id):
                 try:
                     drive_service = build('drive', 'v3', credentials=creds)
@@ -324,7 +356,8 @@ def page_one():
                     st.write('Documento compartilhado com sucesso!') 
                 except HttpError as error:
                     st.error(f'Ocorreu um erro ao compartilhar o documento: {error}')
-
+                  
+            #função responsável por renomear o documento para a formatação exigida
             def rename_file(document_id, new_name):
                 try:
                     drive_service = build('drive', 'v3', credentials=creds)
@@ -337,6 +370,7 @@ def page_one():
                 except HttpError as error:
                     st.error(f"Ocorreu um erro ao renomear o documento: {error}")
 
+        #new_file_name define a forma como o documento será renomeado
         new_file_name = f"PORTARIAS P Nº {primeira_portaria} A {ordem - 1}"
         share_with_me(document_id)
         rename_file(document_id, new_file_name)
@@ -358,18 +392,10 @@ def page_two():
     primeira_resolucao = st.text_input("Número da primeira Resolucao do dia: ")
     
 
-    data = []
+    data = []    
 
-    
-
-    if st.button('Gerar Documento'):
-        
-        
-        # Use regex para extrair o ID do link
-        ids = re.findall(r'spreadsheets/d/([a-zA-Z0-9-_]+)', link)
-
-        
-        # Se um ID foi encontrado, use-o para abrir a planilha
+    if st.button('Gerar Documento'):      
+        ids = re.findall(r'spreadsheets/d/([a-zA-Z0-9-_]+)', link)        
         
         if ids:
             id = ids[0]
@@ -426,10 +452,7 @@ def page_two():
             content = ' '.join(row) + '\n'
             bold_content = re.findall(r'(?:Designar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, a pedido, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Nomear, com validade a partir de \d{1,2}º? de .*? de \d{4},|Designar|Nomear|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
 
-            # bold_content = re.findall(r'(?:Designar|Nomear|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
-
-
-
+            
             requests.append({
                 'insertText': {
                     'location': {
@@ -575,7 +598,7 @@ def page_two():
                     },
                     'fields': 'bold'
                 },
-        #-------------------------------
+        
             })
             requests.append({
                 'updateParagraphStyle': {
@@ -589,8 +612,7 @@ def page_two():
                     'fields': 'alignment'
                 }
 
-        #---------------------------------
-
+        
             })
 
             for item in bold_content:
@@ -617,8 +639,6 @@ def page_two():
 
         if requests:
             docs_service.documents().batchUpdate(documentId=document_id, body={'requests': requests}).execute()
-            
-
         
 
             def share_with_me(document_id):
