@@ -3,8 +3,8 @@
 
 ## :dart: Sobre ##
 
-Esta é uma aplcação que usa o Streamlit como interface gráfica e visa facilitar a criação de documentos de portarias e resoluções que serão publicados no Diário Oficial.
-Portarias "P" e Resoluções "P" são atos administrativos internos que lidam com questões de pessoal, geralmente nomeações/exoneções e designações/dispensas. Esses atos precisam ser publicados no Dário Ofical, para cumprir com os princípios da publicidade e transparência. 
+Esta é uma aplicação que usa o Streamlit como interface gráfica e visa facilitar a criação dos documentos de portarias e resoluções que serão publicados no Diário Oficial do Município do Rio.
+Portarias "P" e Resoluções "P" são atos administrativos internos que lidam com questões de pessoal, geralmente nomeações/exoneções e designações/dispensas. Esses atos precisam ser publicados no Diário Oficial, para cumprir com os princípios da publicidade e transparência. 
 
 ## :sparkles: Objetivos ##
 
