@@ -8,7 +8,7 @@ Portarias "P" e Resoluções "P" são atos administrativos internos que lidam co
 
 ## :sparkles: Objetivos ##
 
-:heavy_check_mark: Facilitar e eliminar trabalhos repetitivos durante o processamento de arquivos usados nas publicações do Diário Oficial (Gabinete do Prefeito e Casa Civil). Tendo em vista o modo repetitivo que envolve o recebimento desses arquivos e sua edição/formatação para posterior publicação, resolvi criar uma forma na intenção de poupar esforço e tempo. Ele foi projetado para pegar dados de uma planilha do Google e usar esses dados para criar um documento do Google. 
+:heavy_check_mark: Facilitar e eliminar trabalhos repetitivos durante o processamento de arquivos usados nas publicações do Diário Oficial (Gabinete do Prefeito e Casa Civil). Tendo em vista o modo repetitivo que envolve o recebimento desses arquivos e sua edição/formatação para posterior publicação, a ideia foi criar uma maneira de poupar esforços desnecessários e tempo. Essa ferramenta foi projetada para pegar dados de qualquer planilha do Google e usar esses dados para criar um documento do Google na devida formatação exigida para a publicação desses atos. 
 
 ## :rocket: Tecnologias ##
 
