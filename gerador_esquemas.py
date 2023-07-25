@@ -315,13 +315,36 @@ def page_one():
             #percorrendo uma lista de substrings que devem ser formatadas em negrito e adicionando as solicitações de atualização correspondentes a uma lista de solicitações,
             #essas solicitações podem então ser enviadas à API do Google Docs para atualizar a formatação do texto no documento.
             for item in bold_content:
+                item_upper = (item[0].upper(), item[1])
                 start_index = document_length - len(content) + content.index(item[0])
                 end_index = start_index + len(item[0])
+                 
+                # remove o texto original 
+                requests.append({
+                    'deleteContentRange': {
+                        'range': {
+                            'startIndex': start_index,
+                            'endIndex': end_index
+                        }
+                    }
+                })
+                
+                # insere o novo texto maiúsculo
+                requests.append({
+                    'insertText': {
+                        'location': {
+                            'index': start_index
+                        },
+                        'text': item_upper[0]
+                    }
+                })
+                
+                # atualiza o textstyle
                 requests.append({
                     'updateTextStyle': {
                         'range': {
                             'startIndex': start_index,
-                            'endIndex': end_index
+                            'endIndex': start_index + len(item_upper[0])
                         },
                         'textStyle': {
                             'bold': True
@@ -616,13 +639,36 @@ def page_two():
             })
 
             for item in bold_content:
+                item_upper = (item[0].upper(), item[1])
                 start_index = document_length - len(content) + content.index(item[0])
                 end_index = start_index + len(item[0])
+                 
+                # remove o texto original 
+                requests.append({
+                    'deleteContentRange': {
+                        'range': {
+                            'startIndex': start_index,
+                            'endIndex': end_index
+                        }
+                    }
+                })
+                
+                # insere o novo texto maiúsculo
+                requests.append({
+                    'insertText': {
+                        'location': {
+                            'index': start_index
+                        },
+                        'text': item_upper[0]
+                    }
+                })
+                
+                # atualiza o textstyle
                 requests.append({
                     'updateTextStyle': {
                         'range': {
                             'startIndex': start_index,
-                            'endIndex': end_index
+                            'endIndex': start_index + len(item_upper[0])
                         },
                         'textStyle': {
                             'bold': True
