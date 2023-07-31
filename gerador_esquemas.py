@@ -148,7 +148,7 @@ def page_one():
         for i, row in enumerate(data, start=1):
             portaria_text = f'\nPORTARIA "P" Nº {ordem} DE {dia} DE {mes} DE {ano}\n'
             content = ' '.join(row) + '\n'
-            bold_content = re.findall(r'(?:Designar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, a pedido, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Nomear, com validade a partir de \d{1,2}º? de .*? de \d{4},|Designar|Nomear|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
+            bold_content = re.findall(r'(?:Designar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, a pedido, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Nomear, com validade a partir de \d{1,2}º? de .*? de \d{4},|Designar|Nomear|Alocar|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
 
             requests.append({
                 'insertText': {
@@ -473,7 +473,7 @@ def page_two():
         for i, row in enumerate(data, start=1):
             resolucao_text = f'\nRESOLUÇÃO "P" Nº {ordem} DE {dia} DE {mes} DE {ano}\n'
             content = ' '.join(row) + '\n'
-            bold_content = re.findall(r'(?:Designar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, a pedido, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Nomear, com validade a partir de \d{1,2}º? de .*? de \d{4},|Designar|Nomear|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
+            bold_content = re.findall(r'(?:Designar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, a pedido, com validade a partir de \d{1,2}º? de .*? de \d{4},|Exonerar, com validade a partir de \d{1,2}º? de .*? de \d{4},|Nomear, com validade a partir de \d{1,2}º? de .*? de \d{4},|Designar|Nomear|Alocar|Exonerar, a pedido,|Dispensar, a pedido,|Exonerar|Dispensar)(.*?)(?=(,|$))', content)
 
             
             requests.append({
