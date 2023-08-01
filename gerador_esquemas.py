@@ -87,6 +87,13 @@ def page_one():
         #arranjo das datas com a lib datetime para posterior inclusão nos atos
         data_atual = date.today()
         dia = data_atual.day
+        #------
+        if dia < 10:
+          dia = dia.replace('0', '', 1)
+
+        if dia == 1:
+          dia = dia.replace("1", "1º")
+       #---------
         meses_portugues = {1: 'JANEIRO',
                            2: 'FEVEREIRO',
                            3: 'MARÇO',
