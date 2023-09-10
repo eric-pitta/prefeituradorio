@@ -14,7 +14,7 @@ load_dotenv()
 # Carrega dinamicamente todas as variáveis ​​de ambiente em UPPERCASE em um dicionário
 all_env_vars = {key: os.getenv(key) for key in os.environ if key.isupper()}
 
-private_key = st.secrets["PRIVATE_KEY"]
+private_key = st.secrets["DEFAULT"]["PRIVATE_KEY"]
 
 # Define os escopos de autorização
 scopes =['https://www.googleapis.com/auth/spreadsheets',
