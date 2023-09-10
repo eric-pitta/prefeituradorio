@@ -1,6 +1,5 @@
 import streamlit as st
 from google.oauth2.service_account import Credentials
-from dotenv import load_dotenv
 import os
 import gspread
 from googleapiclient.discovery import build
@@ -8,13 +7,10 @@ from datetime import date
 import re
 from googleapiclient.errors import HttpError
 
-# Carega as variáveis de ambiente
-load_dotenv()
+all_env_vars = st.secrets["DEFAULT"]
 
-# Carrega dinamicamente todas as variáveis ​​de ambiente em UPPERCASE em um dicionário
-all_env_vars = {key: os.getenv(key) for key in os.environ if key.isupper()}
-
-private_key = st.secrets["DEFAULT"]["PRIVATE_KEY"]
+# Substitui a sequência de escape '\n' com a quebra de linha real
+private_key = all_env_vars["PRIVATE_KEY"].replace("\\n", "\n")
 
 # Define os escopos de autorização
 scopes =['https://www.googleapis.com/auth/spreadsheets',
@@ -25,18 +21,19 @@ scopes =['https://www.googleapis.com/auth/spreadsheets',
 
 # Usa as credenciais carregadas para criar credenciais do Google API
 creds = Credentials.from_service_account_info({
-    "type": all_env_vars.get("TYPE", "default_type"),
-    "project_id": all_env_vars.get("PROJECT_ID", "default_project_id"),
-    "private_key_id": all_env_vars.get("PRIVATE_KEY_ID", "default_private_key_id"),
+    "type": all_env_vars["TYPE"],
+    "project_id": all_env_vars["PROJECT_ID"],
+    "private_key_id": all_env_vars["PRIVATE_KEY_ID"],
     "private_key": private_key,
-    "client_email": all_env_vars.get("CLIENT_EMAIL", "default_client_email"),
-    "client_id": all_env_vars.get("CLIENT_ID", "default_client_id"),
-    "auth_uri": all_env_vars.get("AUTH_URI", "default_auth_uri"),
-    "token_uri": all_env_vars.get("TOKEN_URI", "default_token_uri"),
-    "auth_provider_x509_cert_url": all_env_vars.get("AUTH_PROVIDER_X509_CERT_URL", "default_cert_url"),
-    "client_x509_cert_url": all_env_vars.get("CLIENT_X509_CERT_URL", "default_client_cert_url"),
-    "universe_domain": all_env_vars.get("UNIVERSE_DOMAIN", "default_universe_domain")
+    "client_email": all_env_vars["CLIENT_EMAIL"],
+    "client_id": all_env_vars["CLIENT_ID"],
+    "auth_uri": all_env_vars["AUTH_URI"],
+    "token_uri": all_env_vars["TOKEN_URI"],
+    "auth_provider_x509_cert_url": all_env_vars["AUTH_PROVIDER_X509_CERT_URL"],
+    "client_x509_cert_url": all_env_vars["CLIENT_X509_CERT_URL"],
+    "universe_domain": all_env_vars["UNIVERSE_DOMAIN"]
 }, scopes=scopes)
+
 
 client = gspread.authorize(creds)
 
