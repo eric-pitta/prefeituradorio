@@ -1,4 +1,10 @@
-<img width="960" alt="image" src="https://github.com/eric-pitta/prefeituradorio/assets/138324143/ab184453-2d70-45a5-9ef9-990523ef9383">
+<img width="950" alt="image" src="https://github.com/eric-pitta/prefeituradorio/assets/138324143/8adf88b3-97e9-4e25-8095-8f4a95d74b53">
+
+
+<img width="822" alt="image" src="https://github.com/eric-pitta/prefeituradorio/assets/138324143/e46689ab-5aea-40d9-b991-074aee18be87">
+
+
+
 
 <h1 align="center">Gerador - Portarias e Resoluções</h1>
 <br>
