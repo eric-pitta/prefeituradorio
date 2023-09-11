@@ -3,12 +3,12 @@
 
 ## :dart: Sobre ##
 
-Esta é uma aplicação que usa o Streamlit como interface gráfica e visa facilitar a criação dos documentos de portarias e resoluções que serão publicados no Diário Oficial do Município do Rio.
+Esta é uma aplicação que usa o Streamlit como interface gráfica e visa facilitar a criação dos documentos (portarias e resoluções) que serão publicados no Diário Oficial do Município do Rio.
 Portarias "P" e Resoluções "P" são atos administrativos internos que lidam com questões de pessoal, geralmente nomeações/exoneções e designações/dispensas. Esses atos precisam ser publicados no Diário Oficial, para cumprir com os princípios da publicidade e transparência. 
 
 ## :sparkles: Objetivos ##
 
-:heavy_check_mark: Facilitar e eliminar trabalhos repetitivos durante o processamento de arquivos usados nas publicações do Diário Oficial (Gabinete do Prefeito e Casa Civil). Tendo em vista o modo repetitivo que envolve o recebimento desses arquivos e sua edição/formatação para posterior publicação, a ideia foi criar uma maneira de poupar esforços desnecessários e tempo. Essa ferramenta foi projetada para pegar dados de qualquer planilha do Google e usar esses dados para criar um documento do Google na devida formatação exigida para a publicação desses atos. 
+:heavy_check_mark: Eliminar trabalhos repetitivos durante o processamento de arquivos usados nas publicações do Diário Oficial (Gabinete do Prefeito e Casa Civil). Tendo em vista o modo repetitivo que envolve o recebimento desses arquivos e sua edição/formatação para posterior publicação, a ideia foi criar uma maneira de poupar esforço e tempo. Essa ferramenta foi projetada para pegar dados de qualquer planilha Google (Google Sheets) e usar esses dados para criar um documento word (Google Docs)  na devida formatação exigida para a publicação. 
 
 ## :rocket: Tecnologias ##
 
