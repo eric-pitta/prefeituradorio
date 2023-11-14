@@ -53,7 +53,7 @@ def page_one():
     
 
     # Solicita o link do usuário
-    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com o email: 102277867499-compute@developer.gserviceaccount.com
+    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com o email: "102277867499-compute@developer.gserviceaccount.com"
 _')
     link = st.text_input('Insira o link da planilha:')
 
@@ -426,7 +426,7 @@ def page_two():
     st.title(" RESOLUÇÕES ✒️")
     
     # Solicite o link do usuário
-    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com o email: 102277867499-compute@developer.gserviceaccount.com
+    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com o email: "102277867499-compute@developer.gserviceaccount.com"
 _')
     link = st.text_input('Insira o link da planilha:')
 
