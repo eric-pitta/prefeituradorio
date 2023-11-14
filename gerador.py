@@ -53,7 +53,7 @@ def page_one():
     
 
     # Solicita o link do usuário
-    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com :a cga-project-serviceaccount@cga-project-392415.iam.gserviceaccount.com_')
+    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com :a atos-prefeito-cvl@agile-charger-259016.iam.gserviceaccount.com_')
     link = st.text_input('Insira o link da planilha:')
 
     
@@ -425,7 +425,7 @@ def page_two():
     st.title(" RESOLUÇÕES ✒️")
     
     # Solicite o link do usuário
-    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com :a cga-project-serviceaccount@cga-project-392415.iam.gserviceaccount.com_')
+    st.markdown('_OBS: Antes de continuar não esqueça de verificar se a planilha está sendo compartilhada com :a atos-prefeito-cvl@agile-charger-259016.iam.gserviceaccount.com_')
     link = st.text_input('Insira o link da planilha:')
 
     
