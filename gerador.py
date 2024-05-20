@@ -383,7 +383,37 @@ def page_one():
            
             #incrimenta +1 na sequência dos atos
             ordem += 1
-          
+
+
+            
+
+            #-------teste------    
+
+            # Criar um documento Word separado para cada portaria
+            
+            doc = docx.Document()
+            doc.add_heading(titulo.strip(), level=1)
+            doc.add_paragraph(portaria_text, style='Title')
+            doc.add_paragraph(nova_frase)
+            doc.add_paragraph(resolve)
+            doc.add_paragraph(content)
+            
+            for item in bold_content:
+                run = doc.add_paragraph().add_run(item[0])
+                run.bold = True
+                run.font.size = Pt(12)
+        
+            doc_filename = f"PORTARIA_P_{ordem - 1}.docx"
+            doc.save(doc_filename)
+            st.write(f"Documento {doc_filename} criado com sucesso! ✅")
+
+            #-------teste------
+
+
+
+
+
+            
         # garante que todas as solicitações de atualização de estilo de texto foram enviadas para a API do Google Docs, 
         # mesmo que o número total de solicitações não seja um múltiplo exato de 100
         # (ou seja, ainda existem solicitações restantes na lista requests após o envio em lotes de 100).
